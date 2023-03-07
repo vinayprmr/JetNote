@@ -1,6 +1,7 @@
 package com.example.jetnote.screen
 
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
@@ -27,7 +28,6 @@ import com.example.jetnote.R
 import com.example.jetnote.components.NoteButton
 import com.example.jetnote.components.NoteInputTex
 import com.example.jetnote.components.NoteRow
-import com.example.jetnote.data.NotesDataSource
 import com.example.jetnote.model.Note
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -92,7 +92,7 @@ fun NotesScreen(
                 text = "Save", onClick = {
                     if (title.isNotEmpty() && desc.isNotEmpty()) {
 
-                        onAddNote(Note(title = title, desc = title))
+                        onAddNote(Note(title = title, desc = desc))
 
                         title = ""
                         desc = ""
@@ -105,7 +105,9 @@ fun NotesScreen(
             )
             Divider(modifier = Modifier.padding(20.dp), color = Color.Black)
             LazyColumn {
+                Log.e("Checking Log 1", "")
                 items(notes){ note->
+                    Log.e("Checking Log 2", "")
                     NoteRow(note = note, onNoteClicked = {
                         onRemoveNote(note)
                         Toast.makeText(context,"Note removed",Toast.LENGTH_SHORT).show()
@@ -121,5 +123,5 @@ fun NotesScreen(
 @Preview(showBackground = true)
 @Composable
 fun NotesScreenPreview() {
-    NotesScreen(notes = NotesDataSource().loadNotes(), onAddNote = {}, onRemoveNote = {})
+
 }
